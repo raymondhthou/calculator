@@ -4,7 +4,7 @@ const numbersInput = document.querySelectorAll('.digit');
 const operationInput = document.querySelectorAll('.operator');
 const equalResult = document.querySelector('.equal');
 const deleteAll = document.querySelector('.clear_all');
-const deleteError = document.querySelector('delete');
+const deleteError = document.querySelector('#delete');
 
 let operandA = '';
 let operandB = '';
@@ -48,10 +48,10 @@ operationInput.forEach(operation => {
 
 
 // Function will clear input variable values in display_2 to display_1 calculator
-function clearVariable(operator) {
+function clearVariable(operator = '') {
     operandA += operandB + '' + operator + '';
     displayValueOne.innerText = operandA;
-    displayValueTwo.innerText = result;
+    displayValueTwo.innerText = '';
     operandB = '';
 };
 
@@ -61,15 +61,44 @@ function clearVariable(operator) {
 function calculateOperation() {
     if (previousOperation === '/') {
         result = parseFloat(result) / parseFloat(operandB);
-        console.log(result);
     } else if (previousOperation === '*') {
         result = parseFloat(result) * parseFloat(operandB);
-        console.log(result);
     } else if (previousOperation === '-') {
         result = parseFloat(result) - parseFloat(operandB);
-        console.log(result);
     } else if (previousOperation === '+') {
         result = parseFloat(result) + parseFloat(operandB);
-        console.log(result);
+        
     }
 };
+
+
+
+// Equal operation for math calcualtion
+equalResult.addEventListener('click', (e) => {
+    if(!operandA || !operandB) return;
+    decimalPoint = false;
+    calculateOperation();
+    clearVariable();
+    displayValueTwo.innerText = result;
+    operandB = result;
+    operandA = '';
+});
+
+
+
+// AC input for clearing all the numbers and math operation
+deleteAll.addEventListener('click', (e) => {
+    displayValueOne.innerText = '';
+    displayValueTwo.innerText = '';
+    operandA = '';
+    operandB = '';
+    result = '';
+});
+
+
+
+// Delete the current entry of input
+deleteError.addEventListener("click", () => {
+    displayValueTwo.innerText = "";
+    operandB = "";
+  });
