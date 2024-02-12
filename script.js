@@ -35,12 +35,13 @@ operationInput.forEach(operation => {
         if (!operandB) return;
         decimalPoint = false;
         const operationValue = e.target.innerText;
-        if(operandA && operandB && previousOperation) {
+        if (operandA && operandB && previousOperation) {
             calculateOperation();
         } else {
             result = parseFloat(operandB);
         }
         clearVariable(operationValue);
+        previousOperation = operationValue;
     })
 });
 
@@ -50,6 +51,25 @@ operationInput.forEach(operation => {
 function clearVariable(operator) {
     operandA += operandB + '' + operator + '';
     displayValueOne.innerText = operandA;
-    displayValueTwo.innerText = '';
+    displayValueTwo.innerText = result;
     operandB = '';
-}
+};
+
+
+
+// Calculate mathematical operations 
+function calculateOperation() {
+    if (previousOperation === '/') {
+        result = parseFloat(result) / parseFloat(operandB);
+        console.log(result);
+    } else if (previousOperation === '*') {
+        result = parseFloat(result) * parseFloat(operandB);
+        console.log(result);
+    } else if (previousOperation === '-') {
+        result = parseFloat(result) - parseFloat(operandB);
+        console.log(result);
+    } else if (previousOperation === '+') {
+        result = parseFloat(result) + parseFloat(operandB);
+        console.log(result);
+    }
+};
